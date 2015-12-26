@@ -1,5 +1,6 @@
 defmodule Issues.GithubIssues do
   @user_agent [ {"User-agent", "Elixir hello@rian.me"} ]
+  @github_url Application.get_env(:issues, :github_url)
 
   def fetch(user, project) do
     issues_url(user, project)
@@ -8,7 +9,7 @@ defmodule Issues.GithubIssues do
   end
 
   def issues_url(user, project) do
-    "https://api.github.com/repos/#{user}/#{project}/issues"
+    "#{@github_url}/repos/#{user}/#{project}/issues"
   end
 
   def handle_response({:error, %HTTPoison.Error{reason: error}}) do
@@ -18,9 +19,7 @@ defmodule Issues.GithubIssues do
                                                 body: body}}) when status >= 400 do
     {:error, body}
   end
-  def handle_response({:ok, %HTTPoison.Response{body: body}}), do: {:ok, body}
-
-
-  #def handle_reponse(%{status_code: 200, body: :body}), do: { :ok, body }
-  #def handle_reponse(%{status_code: ___, body: :body}), do: { :error, body }
+  def handle_response({:ok, %HTTPoison.Response{body: body}}) do
+    {:ok, :jsx.decode(body)}
+  end
 end
