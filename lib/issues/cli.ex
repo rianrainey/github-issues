@@ -1,3 +1,5 @@
+import Issues.TableFormatter, only: [print_table_for_columns: 2]
+
 defmodule Issues.CLI do
   @default_count 4
   @moduledoc """
@@ -5,7 +7,7 @@ defmodule Issues.CLI do
   the various functions that end up generating a
   table of the last _n_ issues in a github project
   """
-  def run(argv) do
+  def main(argv) do
     argv
       |> parse_args
       |> process

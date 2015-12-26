@@ -1,5 +1,5 @@
-defmodule TableFormatter do
-  import Enum, only: [ each: 2, map: 2, map_join: 3, only: 1]
+defmodule Issues.TableFormatter do
+  import Enum, only: [ each: 2, map: 2, map_join: 3, max: 1]
 
   def print_table_for_columns(rows, headers) do
     data_by_columns = split_into_columns(rows, headers)
@@ -8,7 +8,7 @@ defmodule TableFormatter do
 
     puts_one_line_in_columns headers, format
     IO.puts                  separator(column_widths)
-    puts_in_columns          data_by_columns
+    puts_in_columns          data_by_columns, format
   end
 
   def split_into_columns(rows, headers) do
@@ -20,7 +20,7 @@ defmodule TableFormatter do
   def printable(str) when is_binary(str), do: str
   def printable(str), do: to_string(str)
 
-  def width_of(columns) do
+  def widths_of(columns) do
     for column <- columns do
       column
       |> map(&String.length/1)
