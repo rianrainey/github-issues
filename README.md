@@ -1,19 +1,28 @@
 # Issues
 
-**TODO: Add description**
+Retrieve a list of Github issues for a given organization/user and a project.
 
 ## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
 
   1. Add issues to your list of dependencies in `mix.exs`:
 
         def deps do
-          [{:issues, "~> 0.0.1"}]
+          [{:issues, github: "rianrainey/github-issues"}]
         end
 
-  2. Ensure issues is started before your application:
+  1. Run `mix deps get`
 
-        def application do
-          [applications: [:issues]]
-        end
+
+## Usage
+
+```
+$ iex -S mix
+iex> Issues.CLI.process {"elixir-lang", "elixir", 1}
+19:26:41.239 [info]  Fetching user elixir-lang's project elixir
+19:26:45.864 [info]  Successful response
+numb | created_at           | title
+-----+----------------------+-----------------------------------------------
+3328 | 2015-05-14T15:00:37Z | Support delayed evaluation of code in .iex.exs
+:ok
+```
+
